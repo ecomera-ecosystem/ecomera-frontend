@@ -17,7 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { AuthService } from '../../../../core/services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -66,8 +66,9 @@ export class RegisterComponent {
 
   submit() {
     if (
-      this.registerForm.valid && 
-      this.registerForm.value.password === this.registerForm.value.confirmPassword
+      this.registerForm.valid &&
+      this.registerForm.value.password ===
+        this.registerForm.value.confirmPassword
     ) {
       this.authService.register(this.registerForm.value).subscribe({
         next: () => {
@@ -78,7 +79,7 @@ export class RegisterComponent {
         },
         complete: () => {
           console.log('Registration completed successfully');
-        }
+        },
       });
     }
   }
