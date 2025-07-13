@@ -1,0 +1,46 @@
+.register-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #2196f3, #21cbf3);
+  padding: 16px;
+}
+
+.branding {
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.app-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.tagline {
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.action-text {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+}
