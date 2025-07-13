@@ -1,0 +1,70 @@
+<mat-toolbar color="primary" class="navbar">
+    <!-- Logo -->
+    <a routerLink="/" class="logo-link">
+        <img src="Logo.svg" alt="Ecomera logo" class="logo-img" />
+    </a>
+
+    <!-- Spacer -->
+    <span class="spacer"></span>
+
+    <!-- Shop Mega Menu -->
+    <button mat-button [matMenuTriggerFor]="shopMegaMenu">Shop</button>
+    <mat-menu #shopMegaMenu="matMenu" class="mega-menu-panel" [overlapTrigger]="false">
+        <div class="mega-menu-container">
+            <!-- Categories -->
+            <div class="mega-menu-categories">
+                <a mat-menu-item *ngFor="let category of categories" [routerLink]="category.path">
+                    {{ category.name }}
+                </a>
+                <mat-divider></mat-divider>
+                <a mat-menu-item routerLink="/categories">See All</a>
+            </div>
+
+            <!-- Featured -->
+            <div class="mega-menu-featured">
+                <div class="featured-box">
+                    <img src="assets/images/top-sellers.jpg" alt="Top Sellers" />
+                    <h4>Top Best Sellers</h4>
+                </div>
+                <div class="featured-box">
+                    <img src="assets/images/new-arrivals.jpg" alt="New Arrivals" />
+                    <h4>New Arrivals</h4>
+                </div>
+            </div>
+        </div>
+    </mat-menu>
+
+    <!-- Support Dropdown -->
+    <button mat-button [matMenuTriggerFor]="supportMenu">Support</button>
+    <mat-menu #supportMenu="matMenu">
+        <button mat-menu-item routerLink="/contact">Contact Us</button>
+        <button mat-menu-item routerLink="/faqs">FAQs</button>
+        <button mat-menu-item routerLink="/terms">Terms & Conditions</button>
+    </mat-menu>
+
+    <!-- About -->
+    <a mat-button routerLink="/about">About Us</a>
+
+    <!-- Spacer -->
+    <span class="spacer"></span>
+
+    <!-- Auth + Cart -->
+    <ng-container *ngIf="isLoggedIn; else guestLinks">
+        <button mat-icon-button routerLink="/cart" matBadge="{{ cartItemCount }}" matBadgeColor="warn">
+            <mat-icon>shopping_cart</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+            <button mat-menu-item routerLink="/profile">Profile</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+    </ng-container>
+
+    <ng-template #guestLinks>
+        <a mat-button routerLink="/login">Login</a>
+        <a mat-button routerLink="/register">Register</a>
+    </ng-template>
+</mat-toolbar>
