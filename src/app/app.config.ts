@@ -12,6 +12,7 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { authInterceptor } from './core/interceptor/auth.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,5 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideAnimations(),
   ],
 };
