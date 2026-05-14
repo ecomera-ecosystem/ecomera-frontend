@@ -1,10 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+
 @Component({
   selector: 'app-hero-carousel',
-  imports: [CarouselModule, RouterModule, CommonModule],
+  standalone: false,
   templateUrl: './hero-carousel.component.html',
   styleUrl: './hero-carousel.component.css',
 })

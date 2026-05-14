@@ -1,27 +1,32 @@
-import { HttpInterceptorFn } from '@angular/common/http';
-import { AuthService } from '../services/auth.service';
-import { inject } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AuthService } from '@app/core/services/auth.service';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
-  const token = authService.getToken();
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
 
-  // Skip adding token for auth URLs
-  if (
-    req.url.includes('/auth/authenticate') ||
-    req.url.includes('/auth/register')
-  ) {
-    return next(req);
+  constructor(private authService: AuthService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.authService.getToken();
+
+    if (
+      req.url.includes('/auth/authenticate') ||
+      req.url.includes('/auth/register')
+    ) {
+      return next.handle(req);
+    }
+
+    if (token) {
+      const authReq = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return next.handle(authReq);
+    }
+
+    return next.handle(req);
   }
-
-  if (token) {
-    const authReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return next(authReq);
-  }
-
-  return next(req);
-};
+}

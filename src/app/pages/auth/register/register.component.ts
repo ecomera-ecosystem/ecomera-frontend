@@ -1,39 +1,16 @@
 import { Component } from '@angular/core';
 import {
-  FormsModule,
   FormControl,
   FormGroup,
-  ReactiveFormsModule,
-  FormControlName,
   Validators,
   FormBuilder,
 } from '@angular/forms';
-
-import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { AuthService } from '../../../core/services/auth.service';
+import { Router } from '@angular/router';
+import { AuthService } from '@app/core/services/auth.service';
 
 @Component({
   selector: 'app-register',
-  imports: [
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatCardModule,
-
-    ReactiveFormsModule,
-    FormsModule,
-    CommonModule,
-
-    RouterModule,
-  ],
+  standalone: false,
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -58,7 +35,7 @@ export class RegisterComponent {
           Validators.required,
           Validators.minLength(8),
         ]),
-        role: ['USER'], // default,
+        role: ['USER'],
       },
       { validators: this.passwordMatchValidator }
     );
@@ -83,6 +60,7 @@ export class RegisterComponent {
       });
     }
   }
+
   get firstname() {
     return this.registerForm.get('firstname');
   }
@@ -107,13 +85,5 @@ export class RegisterComponent {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { passwordMismatch: true };
-  }
-
-  get role() {
-    return this.registerForm.get('role');
-  }
-
-  get isFormValid() {
-    return this.registerForm.valid;
   }
 }
