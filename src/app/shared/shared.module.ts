@@ -7,17 +7,21 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeroCarouselComponent } from './components/hero-carousel/hero-carousel.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     FooterComponent,
     HeroCarouselComponent,
+    ProductCardComponent,
   ],
   imports: [
     CommonModule,
@@ -28,12 +32,17 @@ import { HeroCarouselComponent } from './components/hero-carousel/hero-carousel.
     MatButtonModule,
     MatBadgeModule,
     MatDividerModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
     CarouselModule,
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
     HeroCarouselComponent,
+    ProductCardComponent,
+    MatCardModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class SharedModule {}

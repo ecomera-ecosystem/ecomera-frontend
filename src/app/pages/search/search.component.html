@@ -1,0 +1,31 @@
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Search Bar -->
+  <div class="max-w-xl mx-auto mb-8">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Search products</mat-label>
+      <input
+        matInput
+        [value]="query"
+        (keyup.enter)="search($event)"
+        placeholder="Search by name..."
+      />
+      <mat-icon matSuffix (click)="search($event)" class="cursor-pointer">search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">
+    {{ query ? 'Results for "' + query + '"' : categoryId ? 'Browse Category' : 'All Products' }}
+  </h1>
+
+  <div *ngIf="loading" class="flex justify-center py-20">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && products.length === 0" class="text-center py-20 text-gray-500">
+    <p class="text-lg">No products found</p>
+  </div>
+
+  <div *ngIf="!loading && products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+  </div>
+</div>

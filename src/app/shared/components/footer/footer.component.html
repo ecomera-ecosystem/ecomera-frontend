@@ -1,53 +1,50 @@
-<mat-toolbar color="primary" class="footer-toolbar" fxLayout="column" fxLayoutGap="20px">
-    <!-- Main content: two columns (left + right) -->
-    <div class="footer-content" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="40px">
-
+<mat-toolbar color="primary" class="flex flex-col gap-5 px-6 py-8 bg-white text-gray-700">
+    <!-- Main content: two columns -->
+    <div class="w-full max-w-5xl mx-auto flex justify-between flex-wrap">
         <!-- Left: Support + Visit -->
-        <div class="footer-columns" fxLayout="row" fxLayoutGap="60px">
+        <div class="flex gap-16">
             <!-- Support -->
-            <div class="footer-column">
-                <h3 class="footer-title">Support</h3>
-                <a mat-button routerLink="/about-us" class="footer-link">About Us</a>
-                <a mat-button routerLink="/returns" class="footer-link">Returns</a>
-                <a mat-button routerLink="/faqs" class="footer-link">FAQs</a>
+            <div class="flex flex-col gap-1">
+                <h3 class="text-lg font-bold mb-2">Support</h3>
+                <a mat-button routerLink="/about-us" class="!text-gray-700 !text-sm !px-0 !min-w-0 hover:!text-blue-600 hover:!underline">About Us</a>
+                <a mat-button routerLink="/returns" class="!text-gray-700 !text-sm !px-0 !min-w-0 hover:!text-blue-600 hover:!underline">Returns</a>
+                <a mat-button routerLink="/faqs" class="!text-gray-700 !text-sm !px-0 !min-w-0 hover:!text-blue-600 hover:!underline">FAQs</a>
             </div>
 
             <!-- Visit -->
-            <div class="footer-column">
-                <h3 class="footer-title">Visit</h3>
-                <a mat-button routerLink="/terms-and-conditions" class="footer-link">Terms & Conditions</a>
+            <div class="flex flex-col gap-1">
+                <h3 class="text-lg font-bold mb-2">Visit</h3>
+                <a mat-button routerLink="/terms-and-conditions" class="!text-gray-700 !text-sm !px-0 !min-w-0 hover:!text-blue-600 hover:!underline">Terms & Conditions</a>
             </div>
         </div>
 
         <!-- Right: Logo, Socials, Contact -->
-        <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="start end" class="footer-right">
-            <img src="Logo.svg" alt="Ecomera Logo" class="footer-logo" />
+        <div class="flex flex-col items-end gap-4">
+            <img src="Logo.svg" alt="Ecomera Logo" class="w-30 object-contain" />
 
-            <div fxLayout="row" fxLayoutGap="15px" class="social-links">
+            <div class="flex gap-4">
                 <a href="#" aria-label="Facebook" mat-icon-button>
-                    <mat-icon> facebook </mat-icon>
+                    <mat-icon>facebook</mat-icon>
                 </a>
                 <a href="#" aria-label="Instagram" mat-icon-button>
-                    <mat-icon> instagram </mat-icon>
+                    <mat-icon>instagram</mat-icon>
                 </a>
                 <a href="#" aria-label="Twitter" mat-icon-button>
-                    <mat-icon > twitter </mat-icon>
+                    <mat-icon>twitter</mat-icon>
                 </a>
-
-                
             </div>
 
-            <div class="contact-info" fxLayout="column" fxLayoutAlign="end end">
-                <p>📞 +212 6 12 34 56 78</p>
-                <p>✉️ info&#64;ecomera.com</p>
-                <p>🏠 123 Street, City, Morocco</p>
+            <div class="flex flex-col items-end text-sm">
+                <p class="m-0">📞 +212 6 12 34 56 78</p>
+                <p class="m-0">✉️ info&#64;ecomera.com</p>
+                <p class="m-0">🏠 123 Street, City, Morocco</p>
             </div>
         </div>
     </div>
 
     <!-- Bottom line -->
     <mat-divider></mat-divider>
-    <div class="footer-bottom" fxLayoutAlign="center center">
+    <div class="flex justify-center pt-4 text-sm text-gray-500">
         <p>© 2025 Ecomera. All rights reserved.</p>
     </div>
 </mat-toolbar>

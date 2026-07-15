@@ -1,18 +1,18 @@
-<mat-toolbar color="primary" class="navbar">
+<mat-toolbar color="primary" class="flex items-center justify-between px-4">
     <!-- Logo -->
-    <a routerLink="/" class="logo-link">
-        <img src="Logo.svg" alt="Ecomera logo" class="logo-img" />
+    <a routerLink="/" class="inline-flex items-center no-underline">
+        <img src="Logo.svg" alt="Ecomera logo" class="h-10" />
     </a>
 
     <!-- Spacer -->
-    <span class="spacer"></span>
+    <span class="flex-1"></span>
 
     <!-- Shop Mega Menu -->
     <button mat-button [matMenuTriggerFor]="shopMegaMenu">Shop</button>
     <mat-menu #shopMegaMenu="matMenu" class="mega-menu-panel" [overlapTrigger]="false">
-        <div class="mega-menu-container">
+        <div class="flex p-4 gap-4">
             <!-- Categories -->
-            <div class="mega-menu-categories">
+            <div class="flex-1 flex flex-col gap-1 pr-4 border-r border-gray-300">
                 <a mat-menu-item *ngFor="let category of categories" [routerLink]="category.path">
                     {{ category.name }}
                 </a>
@@ -21,14 +21,14 @@
             </div>
 
             <!-- Featured -->
-            <div class="mega-menu-featured">
-                <div class="featured-box">
-                    <img src="assets/images/top-sellers.jpg" alt="Top Sellers" />
-                    <h4>Top Best Sellers</h4>
+            <div class="flex-[2] flex flex-col gap-4">
+                <div class="flex flex-col items-center bg-gray-50 rounded-md p-2 shadow-sm">
+                    <img src="assets/images/top-sellers.jpg" alt="Top Sellers" class="w-full h-24 object-cover rounded" />
+                    <h4 class="mt-2 text-base text-center">Top Best Sellers</h4>
                 </div>
-                <div class="featured-box">
-                    <img src="assets/images/new-arrivals.jpg" alt="New Arrivals" />
-                    <h4>New Arrivals</h4>
+                <div class="flex flex-col items-center bg-gray-50 rounded-md p-2 shadow-sm">
+                    <img src="assets/images/new-arrivals.jpg" alt="New Arrivals" class="w-full h-24 object-cover rounded" />
+                    <h4 class="mt-2 text-base text-center">New Arrivals</h4>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
     <a mat-button routerLink="/about">About Us</a>
 
     <!-- Spacer -->
-    <span class="spacer"></span>
+    <span class="flex-1"></span>
 
     <!-- Auth + Cart -->
     <ng-container *ngIf="isLoggedIn; else guestLinks">

@@ -1,0 +1,12 @@
+<mat-card class="h-full flex flex-col hover:shadow-lg transition-shadow cursor-pointer" (click)="navigateToDetail()">
+  <div class="h-48 bg-gray-100 flex items-center justify-center overflow-hidden">
+    <img [src]="primaryImage" [alt]="product.title" class="w-full h-full object-contain p-4" />
+  </div>
+  <mat-card-content class="flex-1 flex flex-col p-4">
+    <span class="text-xs text-gray-500 uppercase mb-1">{{ product.categoryName }}</span>
+    <h3 class="text-sm font-medium text-gray-900 line-clamp-2 mb-2">{{ product.title }}</h3>
+    <div class="mt-auto">
+      <span class="text-lg font-bold text-indigo-600">{{ product.price | currency:'MAD':'symbol':'1.2-2' }}</span>
+    </div>
+  </mat-card-content>
+</mat-card>

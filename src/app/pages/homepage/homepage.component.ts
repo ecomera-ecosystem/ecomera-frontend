@@ -1,21 +1,26 @@
-import { Component } from '@angular/core';
-import { AuthService } from '@app/core/services/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '@app/core/services/product.service';
+import { Product } from '@app/core/models/product.model';
 
 @Component({
   selector: 'app-homepage',
   standalone: false,
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.css',
 })
-export class HomepageComponent {
-  constructor(private authService: AuthService, private router: Router) {
+export class HomepageComponent implements OnInit {
+  products: Product[] = [];
+  loading = true;
 
-  }
-  logout() {
-    this.authService.signout().subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
+  constructor(private productService: ProductService) {}
+
+  ngOnInit() {
+    this.productService.getAll(0, 8).subscribe({
+      next: (res) => {
+        this.products = res.content || res;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
       },
     });
   }

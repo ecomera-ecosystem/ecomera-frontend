@@ -1,27 +1,25 @@
-<div class="register-wrapper">
-    <div class="branding">
-        <!-- <h1 class="app-title">Ecomera</h1> -->
-        <img src="Logo.svg" alt="Ecomera Logo" class="logo" />
-
-        <p class="tagline">Create your account</p>
+<div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-500 to-cyan-400 p-4">
+    <div class="text-center text-white mb-5">
+        <img src="Logo.svg" alt="Ecomera Logo" class="w-20 mx-auto mb-3" />
+        <p class="text-base mt-2">Create your account</p>
     </div>
 
-    <mat-card class="register-card">
+    <mat-card class="w-full max-w-sm p-6 rounded-xl shadow-xl">
         <mat-card-content>
             <form [formGroup]="registerForm" (ngSubmit)="submit()">
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="w-full mb-4">
                     <mat-label>First Name</mat-label>
                     <input matInput formControlName="firstname" />
                     <mat-icon matPrefix>person</mat-icon>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="w-full mb-4">
                     <mat-label>Last Name</mat-label>
                     <input matInput formControlName="lastname" />
                     <mat-icon matPrefix>person</mat-icon>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="w-full mb-4">
                     <mat-label>Email</mat-label>
                     <input matInput type="email" formControlName="email" placeholder="Enter your email" />
                     <mat-icon matPrefix>mail</mat-icon>
@@ -30,7 +28,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="w-full mb-4">
                     <mat-label>Password</mat-label>
                     <input matInput type="password" formControlName="password" placeholder="Enter your password" />
                     <mat-icon matPrefix>lock</mat-icon>
@@ -39,24 +37,23 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="w-full mb-4">
                     <mat-label>Confirm Password</mat-label>
                     <input matInput type="password" formControlName="confirmPassword" placeholder="Enter your password" />
                     <mat-icon matPrefix>lock</mat-icon>
                     <mat-error *ngIf="registerForm.hasError('passwordMismatch') && confirmPassword?.touched">
                         Passwords do not match
                     </mat-error>
-
                 </mat-form-field>
 
-                <button mat-raised-button color="primary" class="full-width" type="submit"
+                <button mat-raised-button color="primary" class="w-full" type="submit"
                     [disabled]="registerForm.invalid">
                     Sign Up
                 </button>
             </form>
         </mat-card-content>
 
-        <mat-card-actions class="action-text">
+        <mat-card-actions class="flex justify-center gap-2 text-sm">
             <span>Already have an account?</span>
             <a routerLink="/login">Log in</a>
         </mat-card-actions>

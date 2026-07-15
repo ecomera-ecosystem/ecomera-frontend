@@ -1,0 +1,53 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">My Account</h1>
+
+  <!-- User Info -->
+  <mat-card class="mb-8" *ngIf="user">
+    <mat-card-header>
+      <mat-card-title>{{ user.firstname }} {{ user.lastname }}</mat-card-title>
+      <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="text-sm text-gray-500">Role: {{ user.role || 'User' }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Orders -->
+  <h2 class="text-xl font-bold text-gray-900 mb-4">My Orders</h2>
+
+  <div *ngIf="loading" class="flex justify-center py-12">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && orders.length === 0" class="text-center py-12 text-gray-500">
+    <mat-icon class="text-5xl mb-4" style="font-size: 48px; width: 48px; height: 48px;">receipt_long</mat-icon>
+    <p class="text-lg">No orders yet</p>
+    <button mat-raised-button color="primary" routerLink="/" class="mt-4">Start Shopping</button>
+  </div>
+
+  <div *ngIf="!loading && orders.length > 0" class="space-y-4">
+    <mat-card *ngFor="let order of orders" class="hover:shadow-md transition-shadow">
+      <mat-card-header>
+        <mat-card-title class="text-base">
+          Order #{{ order.id | slice:0:8 }}
+          <span
+            class="ml-2 text-xs px-2 py-1 rounded"
+            [class.bg-green-100]="order.status === 'DELIVERED'"
+            [class.bg-yellow-100]="order.status === 'PENDING'"
+            [class.bg-blue-100]="order.status === 'CONFIRMED'"
+            [class.text-green-800]="order.status === 'DELIVERED'"
+            [class.text-yellow-800]="order.status === 'PENDING'"
+            [class.text-blue-800]="order.status === 'CONFIRMED'"
+          >
+            {{ order.status }}
+          </span>
+        </mat-card-title>
+        <mat-card-subtitle>{{ order.createdAt | date:'medium' }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="text-sm text-gray-600">{{ order.items.length }} item(s)</p>
+        <p class="font-bold text-indigo-600 mt-2">{{ order.total | currency:'MAD':'symbol':'1.2-2' }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
