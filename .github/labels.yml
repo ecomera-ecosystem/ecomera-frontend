@@ -1,0 +1,152 @@
+# ==========================================
+# ECOMERA FRONTEND - GitHub Label Definitions
+# ==========================================
+
+# --- Framework & Language ---
+- name: angular
+  color: "DD0031"
+  description: "Angular framework changes"
+
+- name: typescript
+  color: "3178C6"
+  description: "TypeScript code changes"
+
+- name: html
+  color: "E34F26"
+  description: "HTML template changes"
+
+- name: css
+  color: "1572B6"
+  description: "CSS/Tailwind styling changes"
+
+- name: rxjs
+  color: "B7178C"
+  description: "RxJS reactive programming"
+
+# --- Testing ---
+- name: testing
+  color: "1D76DB"
+  description: "Test files and testing infrastructure"
+
+- name: jasmine
+  color: "8A4182"
+  description: "Jasmine unit tests"
+
+# --- CI/CD & Infra ---
+- name: ci-cd
+  color: "0E8A16"
+  description: "Continuous Integration & Continuous Delivery"
+
+- name: github-actions
+  color: "000000"
+  description: "GitHub Actions workflows"
+
+- name: docker
+  color: "0DB7ED"
+  description: "Docker containerization"
+
+- name: deployment
+  color: "BFD4F2"
+  description: "Deployment configurations and scripts"
+
+# --- Dependencies ---
+- name: dependencies
+  color: "0366D6"
+  description: "Dependency updates (npm, etc.)"
+
+# --- Documentation ---
+- name: documentation
+  color: "0075CA"
+  description: "Documentation improvements or additions"
+
+# --- Generic Workflow Labels ---
+- name: bug
+  color: "D73A4A"
+  description: "Something isn't working"
+
+- name: enhancement
+  color: "84B6EB"
+  description: "New features or improvements"
+
+- name: refactor
+  color: "FBCA04"
+  description: "Code refactoring and cleanup"
+
+- name: question
+  color: "D876E3"
+  description: "Further information is requested"
+
+- name: help wanted
+  color: "008672"
+  description: "Extra attention is needed"
+
+- name: good first issue
+  color: "7057FF"
+  description: "Good for newcomers"
+
+- name: blocked
+  color: "B60205"
+  description: "Blocked by external dependency"
+
+- name: ready-for-review
+  color: "0E8A16"
+  description: "Ready for code review"
+
+- name: release
+  color: "FBCA04"
+  description: "Release preparation or related tasks"
+
+- name: duplicate
+  color: "CFD3D7"
+  description: "This issue or pull request already exists"
+
+- name: invalid
+  color: "E4E669"
+  description: "This doesn't seem right"
+
+- name: wontfix
+  color: "FFFFFF"
+  description: "This will not be worked on"
+
+# --- Priority Labels ---
+- name: high-priority
+  color: "B60205"
+  description: "Critical priority - needs immediate attention"
+
+- name: medium-priority
+  color: "FBCA04"
+  description: "Standard priority"
+
+- name: low-priority
+  color: "C2E0C6"
+  description: "Low priority - nice to have"
+
+# --- Sprint Labels ---
+- name: sprint-0
+  color: "0052CC"
+  description: "Sprint 0: Restructure & Setup"
+
+- name: sprint-1
+  color: "5319E7"
+  description: "Sprint 1: Code Quality & Features"
+
+- name: sprint-2
+  color: "D93F0B"
+  description: "Sprint 2: Testing & Features"
+
+- name: sprint-3
+  color: "0E8A16"
+  description: "Sprint 3: Production Readiness"
+
+- name: sprint-4
+  color: "FBCA04"
+  description: "Sprint 4: Microservices Foundation"
+
+- name: sprint-5
+  color: "FF6F00"
+  description: "Sprint 5: Advanced Features"
+
+# --- Tech Debt ---
+- name: tech-debt
+  color: "D93F0B"
+  description: "Technical debt that needs addressing"
