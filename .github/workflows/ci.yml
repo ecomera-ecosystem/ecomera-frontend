@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Test
-        run: npm ci:test
+        run: npm run ci:test
 
       - name: Build
         run: npm run ci:build
