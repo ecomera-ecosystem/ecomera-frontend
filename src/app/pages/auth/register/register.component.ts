@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/core/services/auth.service';
+import { AuthStateService } from '@app/core/services/auth-state.service';
 
 @Component({
   selector: 'app-register',
@@ -16,10 +17,13 @@ import { AuthService } from '@app/core/services/auth.service';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  error: string | null = null;
+  loading = false;
 
   constructor(
     private router: Router,
     private authService: AuthService,
+    private authState: AuthStateService,
     private fb: FormBuilder
   ) {
     this.registerForm = this.fb.group(
@@ -42,23 +46,30 @@ export class RegisterComponent {
   }
 
   submit() {
-    if (
-      this.registerForm.valid &&
-      this.registerForm.value.password ===
-        this.registerForm.value.confirmPassword
-    ) {
-      this.authService.register(this.registerForm.value).subscribe({
-        next: () => {
-          this.router.navigate(['/home']);
-        },
-        error: (err) => {
-          console.error('Registration failed', err);
-        },
-        complete: () => {
-          console.log('Registration completed successfully');
-        },
-      });
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
     }
+
+    this.loading = true;
+    this.error = null;
+
+    this.authService.register(this.registerForm.value).subscribe({
+      next: (response) => {
+        if (response?.access_token) {
+          this.authService.setToken(response.access_token);
+        }
+        this.authState.checkAuth();
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = err.error?.message || err.message || 'Registration failed. Please try again.';
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    });
   }
 
   get firstname() {

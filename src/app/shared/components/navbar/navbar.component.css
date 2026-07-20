@@ -1,4 +1,26 @@
 ::ng-deep .mega-menu-panel .mat-mdc-menu-content {
   padding: 0 !important;
-  width: 600px;
+  min-width: 700px;
+}
+
+::ng-deep .mega-menu-panel .mat-mdc-menu-content .mat-mdc-menu-item {
+  min-height: 36px;
+}
+
+::ng-deep .mega-menu-panel .mat-mdc-menu-content .mat-mdc-menu-item .mdc-list-item__primary-text {
+  font-size: 14px;
+}
+
+::ng-deep .cart-menu-panel .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.mobile-only {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .mobile-only {
+    display: none !important;
+  }
 }
