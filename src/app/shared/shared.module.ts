@@ -42,6 +42,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     HeroCarouselComponent,
     ProductCardComponent,
     MatCardModule,
+    MatIconModule,
     MatProgressSpinnerModule,
   ],
 })
