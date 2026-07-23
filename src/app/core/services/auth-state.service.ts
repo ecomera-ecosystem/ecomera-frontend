@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -6,10 +6,10 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AuthStateService {
+  private authService = inject(AuthService);
+
   private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$: Observable<boolean> = this.loggedInSubject.asObservable();
-
-  constructor(private authService: AuthService) {}
 
   private hasToken(): boolean {
     return !!this.authService.getToken();
