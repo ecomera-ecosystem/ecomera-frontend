@@ -1,0 +1,53 @@
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <button mat-button (click)="router.navigate(['/'])">
+    <mat-icon>arrow_back</mat-icon> Back to Home
+  </button>
+
+  <div *ngIf="loading" class="flex justify-center py-20">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && product" class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+    <!-- Images -->
+    <div>
+      <div class="bg-gray-100 rounded-lg h-96 flex items-center justify-center p-8 mb-4">
+        <img [src]="selectedImage" [alt]="product.title" class="w-full h-full object-contain" />
+      </div>
+      <div class="flex gap-2 overflow-x-auto" *ngIf="product.images && product.images.length > 1">
+        <div
+          *ngFor="let img of product.images"
+          class="w-20 h-20 bg-gray-100 rounded cursor-pointer border-2 p-1 flex-shrink-0"
+          [class.border-indigo-600]="selectedImage === img.imageUrl"
+          (click)="selectImage(img.imageUrl)"
+        >
+          <img [src]="img.imageUrl" [alt]="img.altText" class="w-full h-full object-contain" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="flex flex-col gap-4">
+      <span class="text-sm text-gray-500 uppercase">{{ product.categoryName }}</span>
+      <h1 class="text-3xl font-bold text-gray-900">{{ product.title }}</h1>
+      <p class="text-3xl font-bold text-indigo-600">{{ product.price | currency:'MAD':'symbol':'1.2-2' }}</p>
+      <p class="text-gray-600 leading-relaxed">{{ product.description }}</p>
+
+      <div class="flex items-center gap-4 mt-4">
+        <mat-form-field appearance="outline" class="w-24">
+          <mat-label>Qty</mat-label>
+          <input matInput type="number" min="1" [(ngModel)]="quantity" />
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="flex-1 py-6 text-lg"
+          (click)="addToCart()"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+          {{ addedToCart ? 'Added!' : 'Add to Cart' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
