@@ -28,8 +28,8 @@ export class ProfileComponent implements OnInit {
         this.user = {
           id: payload.sub || payload.userId,
           email: payload.sub,
-          firstname: payload.firstname || '',
-          lastname: payload.lastname || '',
+          firstName: payload.firstName || '',
+          lastName: payload.lastName || '',
           role: payload.role,
         };
       } catch {}

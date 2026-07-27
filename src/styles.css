@@ -4,3 +4,8 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Fix icon overlap: add left padding to inputs that have a matPrefix icon */
+.mat-mdc-form-field:has(.mat-prefix) .mat-mdc-input-element {
+  padding-left: 36px !important;
+}

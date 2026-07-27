@@ -28,8 +28,8 @@ export class RegisterComponent {
   ) {
     this.registerForm = this.fb.group(
       {
-        firstname: new FormControl('', [Validators.required]),
-        lastname: new FormControl('', [Validators.required]),
+        firstName: new FormControl('', [Validators.required]),
+        lastName: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [
           Validators.required,
@@ -54,7 +54,13 @@ export class RegisterComponent {
     this.loading = true;
     this.error = null;
 
-    this.authService.register(this.registerForm.value).subscribe({
+    this.authService.register({
+      firstName: this.registerForm.value.firstName,
+      lastName: this.registerForm.value.lastName,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      role: this.registerForm.value.role,
+    }).subscribe({
       next: (response) => {
         if (response?.access_token) {
           this.authService.setToken(response.access_token);
@@ -72,12 +78,12 @@ export class RegisterComponent {
     });
   }
 
-  get firstname() {
-    return this.registerForm.get('firstname');
+  get firstName() {
+    return this.registerForm.get('firstName');
   }
 
-  get lastname() {
-    return this.registerForm.get('lastname');
+  get lastName() {
+    return this.registerForm.get('lastName');
   }
 
   get email() {

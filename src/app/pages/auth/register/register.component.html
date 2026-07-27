@@ -11,18 +11,18 @@
                 <div class="flex gap-3">
                     <mat-form-field appearance="outline" class="w-full mb-4">
                         <mat-label>First Name</mat-label>
-                        <input matInput formControlName="firstname" />
+                        <input matInput formControlName="firstName" />
                         <mat-icon matPrefix>person</mat-icon>
-                        <mat-error *ngIf="firstname?.invalid && firstname?.touched">
+                        <mat-error *ngIf="firstName?.invalid && firstName?.touched">
                             First name is required
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="w-full mb-4">
                         <mat-label>Last Name</mat-label>
-                        <input matInput formControlName="lastname" />
+                        <input matInput formControlName="lastName" />
                         <mat-icon matPrefix>person</mat-icon>
-                        <mat-error *ngIf="lastname?.invalid && lastname?.touched">
+                        <mat-error *ngIf="lastName?.invalid && lastName?.touched">
                             Last name is required
                         </mat-error>
                     </mat-form-field>
