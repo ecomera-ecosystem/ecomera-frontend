@@ -9,15 +9,16 @@ import { CartComponent } from '@app/pages/cart/cart.component';
 import { CheckoutComponent } from '@app/pages/checkout/checkout.component';
 import { SearchComponent } from '@app/pages/search/search.component';
 import { ProfileComponent } from '@app/pages/profile/profile.component';
+import { AuthGuard } from '@app/core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home', title: 'Ecomera' },
-  { path: 'home', component: HomepageComponent, title: 'Welcome to Ecomera' },
+  { path: '', pathMatch: 'full', redirectTo: '', title: 'Ecomera' },
+  { path: '', component: HomepageComponent, title: 'Welcome to Ecomera' },
   { path: 'products/:id', component: ProductDetailComponent, title: 'Product Details' },
-  { path: 'cart', component: CartComponent, title: 'Shopping Cart' },
-  { path: 'checkout', component: CheckoutComponent, title: 'Checkout' },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard], title: 'Shopping Cart' },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard], title: 'Checkout' },
   { path: 'search', component: SearchComponent, title: 'Search Products' },
-  { path: 'profile', component: ProfileComponent, title: 'My Account' },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], title: 'My Account' },
   { path: 'login', component: LoginComponent, title: 'Log in' },
   { path: 'register', component: RegisterComponent, title: 'Sign up' },
   { path: '**', component: NotFoundComponent, title: 'Page Not Found' },

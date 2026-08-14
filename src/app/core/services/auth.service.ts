@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginInput, RegisterInput } from '../models/auth.model';
+import { LoginInput, RegisterInput, User } from '../models/auth.model';
 import { environment } from '@environments/environment';
 
 @Injectable({
@@ -24,7 +24,15 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/logout`, {});
   }
 
+  getMe(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/me`);
+  }
+
   setToken(token: string) {
+    if (!token) {
+      localStorage.removeItem('jwtToken');
+      return;
+    }
     localStorage.setItem('jwtToken', token);
   }
 

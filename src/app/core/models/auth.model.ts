@@ -8,6 +8,10 @@ export interface User {
   role?: UserRole;
   ipAddress?: string;
   lastLogin?: string;
+  createdAt?: string;
+  phone?: string;
+  dateOfBirth?: string;
+  avatarUrl?: string;
 }
 
 export type AuthResponse = {

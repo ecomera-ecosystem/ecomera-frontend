@@ -76,7 +76,7 @@
         <a *ngFor="let cat of categories"
            routerLink="/search" [queryParams]="{ categoryId: cat.id }"
            class="group relative h-40 rounded-xl overflow-hidden bg-cover bg-center flex items-end p-4 cursor-pointer"
-           [style.background-image]="'url(' + cat.image + ')'">
+           [style.background-image]="'url(' + cat.imageUrl + ')'">
             <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
             <span class="relative text-white font-semibold text-sm md:text-base drop-shadow">{{ cat.name }}</span>
         </a>
