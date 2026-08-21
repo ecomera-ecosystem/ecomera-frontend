@@ -1,3 +1,4 @@
 <app-navbar *ngIf="!isAuthPage" [isLoggedIn]="isLoggedIn"/>
+<div *ngIf="!isAuthPage" class="h-[62px]"></div>
 <router-outlet></router-outlet>
 <app-footer *ngIf="!isAuthPage"/>
