@@ -3,17 +3,20 @@ import { UserRole } from "@app/shared/enums/user-role.enum";
 export interface User {
   id: string;
   email: string;
-  firstname: string;
-  lastname: string;
-  role?: UserRole
+  firstName: string;
+  lastName: string;
+  role?: UserRole;
   ipAddress?: string;
   lastLogin?: string;
+  createdAt?: string;
+  phone?: string;
+  dateOfBirth?: string;
+  avatarUrl?: string;
 }
 
 export type AuthResponse = {
   access_token: string;
   refresh_token: string;
-  // user: User;
 };
 
 export type LoginInput = {
@@ -24,7 +27,7 @@ export type LoginInput = {
 export type RegisterInput = {
   email: string;
   password: string;
-  firstname: string;
-  lastname: string;
-  role?: UserRole;
+  firstName: string;
+  lastName: string;
+  role: UserRole;
 };

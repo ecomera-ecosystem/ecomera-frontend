@@ -8,19 +8,25 @@ import { AuthService } from './auth.service';
 export class AuthStateService {
   private authService = inject(AuthService);
 
-  private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+  private loggedInSubject = new BehaviorSubject<boolean>(this.isValidToken());
   isLoggedIn$: Observable<boolean> = this.loggedInSubject.asObservable();
 
-  private hasToken(): boolean {
-    return !!this.authService.getToken();
+  private isValidToken(): boolean {
+    const token = this.authService.getToken();
+    if (!token) return false;
+    try {
+      const parts = token.split('.');
+      return parts.length === 3 && parts.every(p => p.length > 0);
+    } catch {
+      return false;
+    }
   }
 
   checkAuth(): void {
-    this.loggedInSubject.next(this.hasToken());
+    this.loggedInSubject.next(this.isValidToken());
   }
 
   logout(): void {
-    this.authService.setToken('');
     localStorage.removeItem('jwtToken');
     this.loggedInSubject.next(false);
   }

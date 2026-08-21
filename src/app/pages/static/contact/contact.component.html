@@ -1,0 +1,80 @@
+<div class="animate-fade-in">
+  <!-- Header -->
+  <section class="bg-panel text-white">
+    <div class="max-w-6xl mx-auto px-6 py-14">
+      <span class="text-brand-light text-xs uppercase tracking-widest font-semibold">Get in touch</span>
+      <h1 class="font-display text-4xl font-bold mt-3">Contact us</h1>
+      <p class="text-gray-300 mt-3 max-w-2xl">Questions, orders, or just want to say hi we're here 24/7.</p>
+    </div>
+  </section>
+
+  <!-- Two columns: dark info + white form -->
+  <section class="max-w-6xl mx-auto px-6 py-12">
+    <div class="grid md:grid-cols-2 rounded-2xl overflow-hidden shadow-lift">
+      <!-- Info column (dark) -->
+      <div class="bg-panel text-white p-8 md:p-10 flex flex-col gap-8">
+        <h2 class="font-display text-2xl font-semibold">Visit one of our stores</h2>
+        <div class="flex flex-col gap-6">
+          <div *ngFor="let store of stores" class="flex gap-4">
+            <div class="w-10 h-10 shrink-0 bg-white/10 rounded-lg flex items-center justify-center">
+              <mat-icon style="font-size: 20px; width: 20px; height: 20px;" class="text-brand-light">storefront</mat-icon>
+            </div>
+            <div>
+              <p class="font-medium">{{ store.name }}</p>
+              <p class="text-sm text-gray-400 mt-0.5">{{ store.address }}</p>
+              <p class="text-sm text-gray-400">{{ store.phone }}</p>
+              <p class="text-xs text-gray-500 mt-0.5">{{ store.hours }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-auto flex flex-col gap-3 pt-6 border-t border-white/10">
+          <p class="flex items-center gap-3 text-sm text-gray-300 m-0">
+            <mat-icon style="font-size: 18px; width: 18px; height: 18px;" class="text-brand-light">email</mat-icon>
+            info&#64;ecomera.com
+          </p>
+          <p class="flex items-center gap-3 text-sm text-gray-300 m-0">
+            <mat-icon style="font-size: 18px; width: 18px; height: 18px;" class="text-brand-light">support_agent</mat-icon>
+            +212 6 12 34 56 78
+          </p>
+        </div>
+      </div>
+
+      <!-- Form column (white) -->
+      <div class="bg-white p-8 md:p-10">
+        <h2 class="font-display text-2xl font-semibold text-ink">Send us a message</h2>
+        <p class="text-sm text-ink/60 mt-2">We usually reply within a few hours.</p>
+        <form class="flex flex-col gap-5 mt-8" #contactForm="ngForm" (ngSubmit)="contactForm.resetForm()">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Full name</mat-label>
+            <input matInput name="name" required ngModel placeholder="Your name" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Email address</mat-label>
+            <input matInput name="email" type="email" required ngModel placeholder="you@example.com" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Subject</mat-label>
+            <mat-select name="subject" required ngModel>
+              <mat-option value="order">Question about an order</mat-option>
+              <mat-option value="returns">Returns &amp; refunds</mat-option>
+              <mat-option value="partnership">Partnership</mat-option>
+              <mat-option value="other">Something else</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Message</mat-label>
+            <textarea matInput name="message" rows="4" required ngModel placeholder="How can we help?"></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" class="w-full mt-2" type="submit" [disabled]="contactForm.invalid">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section class="max-w-6xl mx-auto px-6 pb-16">
+    <div id="ecomera-map" class="w-full h-[420px] rounded-2xl overflow-hidden shadow-card"></div>
+  </section>
+</div>

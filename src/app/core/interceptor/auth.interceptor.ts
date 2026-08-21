@@ -12,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = this.authService.getToken();
 
     if (
-      req.url.includes('/auth/authenticate') ||
+      req.url.includes('/auth/login') ||
       req.url.includes('/auth/register')
     ) {
       return next.handle(req);

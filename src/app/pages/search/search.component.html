@@ -1,31 +1,156 @@
-<div class="max-w-7xl mx-auto px-4 py-8">
-  <!-- Search Bar -->
-  <div class="max-w-xl mx-auto mb-8">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Search products</mat-label>
-      <input
-        matInput
-        [value]="query"
-        (keyup.enter)="search($event)"
-        placeholder="Search by name..."
-      />
-      <mat-icon matSuffix (click)="search($event)" class="cursor-pointer">search</mat-icon>
-    </mat-form-field>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+  <!-- Page header -->
+  <div class="mb-6">
+    <h1 class="font-display text-2xl md:text-3xl font-bold text-ink">
+      {{ query ? 'Results for "' + query + '"' : categoryName ? categoryName : 'All Products' }}
+    </h1>
+    <p class="text-sm text-ink/50 mt-1">{{ totalResults }} product{{ totalResults === 1 ? '' : 's' }} found</p>
   </div>
 
-  <h1 class="text-2xl font-bold text-gray-900 mb-6">
-    {{ query ? 'Results for "' + query + '"' : categoryId ? 'Browse Category' : 'All Products' }}
-  </h1>
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- ===== Filter sidebar ===== -->
+    <aside class="lg:w-64 shrink-0 lg:sticky lg:top-[78px] self-start flex flex-col gap-6">
+      <div class="bg-surface-card rounded-2xl border border-line p-5 flex flex-col gap-6 shadow-card">
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-ink">Filters</h2>
+          <button *ngIf="hasActiveFilters" (click)="clearAllFilters()" class="text-xs text-brand hover:underline font-medium">
+            Clear all
+          </button>
+        </div>
 
-  <div *ngIf="loading" class="flex justify-center py-20">
-    <mat-spinner diameter="48"></mat-spinner>
-  </div>
+        <!-- Keywords -->
+        <div>
+          <h3 class="text-xs font-semibold text-ink/50 uppercase tracking-wider mb-2">Keywords</h3>
+          <div class="relative">
+            <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-ink/40" style="font-size: 18px; width: 18px; height: 18px;">search</mat-icon>
+            <input
+              type="text"
+              placeholder="Search..."
+              [value]="query"
+              (keyup.enter)="onKeywordSearch($event)"
+              class="w-full pl-9 pr-3 py-2 text-sm bg-surface rounded-lg border border-line focus:outline-none focus:border-brand"
+            />
+          </div>
+        </div>
 
-  <div *ngIf="!loading && products.length === 0" class="text-center py-20 text-gray-500">
-    <p class="text-lg">No products found</p>
-  </div>
+        <!-- Categories -->
+        <div>
+          <h3 class="text-xs font-semibold text-ink/50 uppercase tracking-wider mb-2">Category</h3>
+          <div class="flex flex-col gap-1">
+            <button
+              (click)="selectCategory(null)"
+              class="text-left text-sm px-2.5 py-1.5 rounded-lg transition-colors"
+              [class]="categoryId === null ? 'bg-brand-soft text-brand font-medium' : 'text-ink/70 hover:bg-surface'"
+            >
+              All Categories
+            </button>
+            <button
+              *ngFor="let cat of categories"
+              (click)="selectCategory(cat.id)"
+              class="text-left text-sm px-2.5 py-1.5 rounded-lg transition-colors truncate"
+              [class]="categoryId === cat.id ? 'bg-brand-soft text-brand font-medium' : 'text-ink/70 hover:bg-surface'"
+            >
+              {{ cat.name }}
+            </button>
+          </div>
+        </div>
 
-  <div *ngIf="!loading && products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        <!-- Price range -->
+        <div>
+          <h3 class="text-xs font-semibold text-ink/50 uppercase tracking-wider mb-2">Price range (MAD)</h3>
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              min="0"
+              placeholder="Min"
+              [(ngModel)]="minPrice"
+              class="w-full px-2.5 py-2 text-sm bg-surface rounded-lg border border-line focus:outline-none focus:border-brand"
+            />
+            <span class="text-ink/40">–</span>
+            <input
+              type="number"
+              min="0"
+              placeholder="Max"
+              [(ngModel)]="maxPrice"
+              (keyup.enter)="applyPriceRange()"
+              class="w-full px-2.5 py-2 text-sm bg-surface rounded-lg border border-line focus:outline-none focus:border-brand"
+            />
+          </div>
+          <div class="flex gap-2 mt-2">
+            <button (click)="applyPriceRange()" class="flex-1 text-xs font-medium text-white bg-brand hover:bg-brand-dark transition-colors rounded-full py-1.5">
+              Apply
+            </button>
+            <button *ngIf="minPrice != null || maxPrice != null" (click)="clearPriceRange()" class="text-xs text-ink/50 hover:text-ink px-2">
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <!-- Color -->
+        <div>
+          <h3 class="text-xs font-semibold text-ink/50 uppercase tracking-wider mb-2">Color</h3>
+          <div class="flex flex-wrap gap-1.5">
+            <button
+              *ngFor="let c of colors"
+              (click)="toggleColor(c)"
+              class="text-xs px-3 py-1.5 rounded-full border transition-colors"
+              [class]="color === c ? 'bg-brand text-white border-brand' : 'border-line text-ink/70 hover:border-brand hover:text-brand'"
+            >
+              {{ c }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Size -->
+        <div>
+          <h3 class="text-xs font-semibold text-ink/50 uppercase tracking-wider mb-2">Size</h3>
+          <div class="flex flex-wrap gap-1.5">
+            <button
+              *ngFor="let s of sizes"
+              (click)="toggleSize(s)"
+              class="text-xs w-9 h-9 rounded-full border transition-colors flex items-center justify-center"
+              [class]="size === s ? 'bg-brand text-white border-brand' : 'border-line text-ink/70 hover:border-brand hover:text-brand'"
+            >
+              {{ s }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== Results ===== -->
+    <section class="flex-1 min-w-0">
+      <!-- Sort bar -->
+      <div class="flex items-center justify-between gap-4 mb-5 overflow-x-auto pb-1">
+        <span class="hidden sm:block text-sm text-ink/50 shrink-0">Sort by:</span>
+        <div class="flex items-center gap-2">
+          <button
+            *ngFor="let opt of sortOptions"
+            (click)="setSort(opt.value)"
+            class="text-xs sm:text-sm px-4 py-1.5 rounded-full border whitespace-nowrap transition-colors font-medium"
+            [class]="sort === opt.value ? 'bg-ink text-white border-ink' : 'border-line text-ink/60 hover:border-ink hover:text-ink'"
+          >
+            {{ opt.label }}
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="flex justify-center py-20">
+        <mat-spinner diameter="48"></mat-spinner>
+      </div>
+
+      <div *ngIf="!loading && products.length === 0" class="text-center py-20">
+        <mat-icon class="text-placeholder" style="font-size: 48px; width: 48px; height: 48px;">search_off</mat-icon>
+        <p class="text-lg text-ink/60 mt-3">No products found</p>
+        <p class="text-sm text-ink/40 mt-1">Try adjusting your filters or keywords.</p>
+        <button *ngIf="hasActiveFilters" mat-stroked-button class="mt-4 !border-brand !text-brand rounded-full" (click)="clearAllFilters()">
+          Clear all filters
+        </button>
+      </div>
+
+      <div *ngIf="!loading && products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 animate-fade-in">
+        <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+      </div>
+    </section>
   </div>
 </div>

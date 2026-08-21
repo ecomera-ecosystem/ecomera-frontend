@@ -48,7 +48,8 @@ export class LoginComponent {
       next: (response) => {
         this.authService.setToken(response.access_token);
         this.authState.checkAuth();
-        this.router.navigate(['/home']);
+        const returnUrl = this.router.parseUrl(this.router.url).queryParamMap.get('returnUrl');
+        this.router.navigateByUrl(returnUrl || '/home');
       },
       error: (err) => {
         this.loading = false;

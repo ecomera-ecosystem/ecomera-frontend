@@ -7,7 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
 
+import { SharedModule } from '@app/shared/shared.module';
 import { ProductDetailComponent } from './product-detail.component';
 
 @NgModule({
@@ -21,6 +23,8 @@ import { ProductDetailComponent } from './product-detail.component';
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDividerModule,
+    SharedModule,
   ],
 })
 export class ProductDetailModule {}

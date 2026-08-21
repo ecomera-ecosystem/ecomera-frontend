@@ -3,4 +3,74 @@
 @tailwind utilities;
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Inter, "Helvetica Neue", Roboto, sans-serif;
+  background-color: #F0EEEF;
+  color: #1E1E1E;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Material 3 indigo-ish brand theming */
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-stroked-button, .mat-mdc-flat-button, .mat-mdc-unelevated-button {
+  font-family: Inter, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-raised-button.mat-primary, .mat-mdc-flat-button.mat-primary, .mat-mdc-fab.mat-primary, .mat-mdc-mini-fab.mat-primary {
+  --mdc-filled-button-container-color: #2A4BFF;
+  --mat-mdc-button-persistent-ripple-color: rgba(255,255,255,0.2);
+}
+
+.mat-mdc-stroked-button.mat-primary {
+  --mdc-outlined-button-outline-color: #2A4BFF;
+  --mdc-outlined-button-label-text-color: #2A4BFF;
+}
+
+/* Brand accents on material form fields */
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay,
+.mat-mdc-form-field.mat-focused .mat-form-field-ripple {
+  --mdc-filled-text-field-focus-active-indicator-color: #2A4BFF;
+}
+
+/* Fix icon overlap: add left padding to inputs that have a matPrefix icon */
+.mat-mdc-form-field:has(.mat-prefix) .mat-mdc-input-element {
+  padding-left: 36px !important;
+}
+
+/* Utility helpers */
+.font-display { font-family: Sora, Inter, sans-serif; }
+
+/* Scrollbar styling (subtle brand tint) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #EDEDED; }
+::-webkit-scrollbar-thumb { background: #C4C4C4; border-radius: 999px; border: 2px solid #EDEDED; }
+::-webkit-scrollbar-thumb:hover { background: #B4B4B4; }
+
+/* Leaflet overrides to fit the brand look */
+.leaflet-container { font-family: Inter, sans-serif; }
+
+/* Custom store pins (global: Leaflet injects marker DOM outside Angular templates) */
+.ecomera-pin {
+  background: transparent;
+  border: none;
+}
+
+.pin-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #2A4BFF;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.ecomera-pin::after {
+  content: '';
+  position: absolute;
+  top: 21px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #2A4BFF;
+}

@@ -17,4 +17,8 @@ export interface Product {
   categoryName: string;
   createdAt: string;
   updatedAt: string;
+  color?: string;
+  size?: string;
+  discountPercent?: number;
+  rating?: number;
 }

@@ -11,10 +11,12 @@ import { Product } from '@app/core/models/product.model';
 })
 export class ProductDetailComponent implements OnInit {
   product: Product | null = null;
+  relatedProducts: Product[] = [];
   selectedImage: string = '';
   quantity = 1;
   loading = true;
   addedToCart = false;
+  readonly Math = Math;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,12 +36,26 @@ export class ProductDetailComponent implements OnInit {
         this.product = product;
         this.selectedImage = this.getPrimaryImage(product);
         this.loading = false;
+        this.loadRelatedProducts(product);
       },
       error: () => {
         this.loading = false;
         this.router.navigate(['/not-found']);
       },
     });
+  }
+
+  private loadRelatedProducts(product: Product) {
+    if (!product.categoryId) return;
+    this.productService
+      .filter({ categoryId: product.categoryId, sort: 'rating_desc', page: 0, pageSize: 8 })
+      .subscribe({
+        next: (res) => {
+          const items: Product[] = res.content || res || [];
+          this.relatedProducts = items.filter((p) => p.id !== product.id).slice(0, 4);
+        },
+        error: () => (this.relatedProducts = []),
+      });
   }
 
   getPrimaryImage(product: Product): string {

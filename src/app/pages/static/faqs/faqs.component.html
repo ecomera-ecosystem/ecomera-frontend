@@ -1,0 +1,58 @@
+<div class="animate-fade-in">
+  <!-- Header -->
+  <section class="max-w-3xl mx-auto px-6 pt-14 pb-8 text-center">
+    <span class="text-brand text-xs uppercase tracking-widest font-semibold">Help center</span>
+    <h1 class="font-display text-4xl font-bold mt-3">Frequently asked questions</h1>
+    <p class="text-ink/60 mt-3">Everything you need to know. Can't find your answer? <a routerLink="/contact" class="text-brand font-medium hover:underline">Contact us</a>.</p>
+  </section>
+
+  <section class="max-w-3xl mx-auto px-6 pb-16 flex flex-col gap-10">
+    <!-- Orders & general -->
+    <div>
+      <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2">
+        <mat-icon class="text-brand" style="font-size: 20px; width: 20px; height: 20px;">shopping_bag</mat-icon>
+        Orders &amp; general
+      </h2>
+      <mat-accordion class="flex flex-col gap-3" [multi]="true">
+        <mat-expansion-panel *ngFor="let item of general" class="!rounded-xl !bg-white shadow-card !border !border-line">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-medium text-ink">{{ item.q }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="text-ink/70 leading-relaxed">{{ item.a }}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <!-- Payments -->
+    <div>
+      <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2">
+        <mat-icon class="text-brand" style="font-size: 20px; width: 20px; height: 20px;">credit_card</mat-icon>
+        Payments
+      </h2>
+      <mat-accordion class="flex flex-col gap-3" [multi]="true">
+        <mat-expansion-panel *ngFor="let item of payments" class="!rounded-xl !bg-white shadow-card !border !border-line">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-medium text-ink">{{ item.q }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="text-ink/70 leading-relaxed">{{ item.a }}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <!-- Returns -->
+    <div>
+      <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2">
+        <mat-icon class="text-brand" style="font-size: 20px; width: 20px; height: 20px;">autorenew</mat-icon>
+        Returns &amp; refunds
+      </h2>
+      <mat-accordion class="flex flex-col gap-3" [multi]="true">
+        <mat-expansion-panel *ngFor="let item of returns" class="!rounded-xl !bg-white shadow-card !border !border-line">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="font-medium text-ink">{{ item.q }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="text-ink/70 leading-relaxed">{{ item.a }}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </section>
+</div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderService } from '@app/core/services/order.service';
 import { AuthService } from '@app/core/services/auth.service';
+import { AuthStateService } from '@app/core/services/auth-state.service';
 import { User } from '@app/core/models/auth.model';
 import { Order } from '@app/core/models/order.model';
 
@@ -17,23 +19,20 @@ export class ProfileComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private authService: AuthService,
+    private authState: AuthStateService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
-    // Decode user from token if available
-    const token = this.authService.getToken();
-    if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        this.user = {
-          id: payload.sub || payload.userId,
-          email: payload.sub,
-          firstname: payload.firstname || '',
-          lastname: payload.lastname || '',
-          role: payload.role,
-        };
-      } catch {}
-    }
+    this.authService.getMe().subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+      error: () => {
+        this.authState.logout();
+        this.router.navigate(['/login']);
+      },
+    });
 
     this.orderService.getAll().subscribe({
       next: (orders) => {

@@ -1,6 +1,7 @@
 ::ng-deep .mega-menu-panel .mat-mdc-menu-content {
   padding: 0 !important;
   min-width: 700px;
+  border-radius: 12px;
 }
 
 ::ng-deep .mega-menu-panel .mat-mdc-menu-content .mat-mdc-menu-item {
