@@ -21,6 +21,10 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], title: 'My Account' },
   { path: 'login', component: LoginComponent, title: 'Log in' },
   { path: 'register', component: RegisterComponent, title: 'Sign up' },
+  {
+    path: '',
+    loadChildren: () => import('@app/pages/static/static.module').then((m) => m.StaticModule),
+  },
   { path: '**', component: NotFoundComponent, title: 'Page Not Found' },
 ];
 

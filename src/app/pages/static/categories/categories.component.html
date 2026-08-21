@@ -1,0 +1,40 @@
+<div class="animate-fade-in">
+  <!-- Header -->
+  <section class="max-w-6xl mx-auto px-6 pt-14 pb-10 text-center">
+    <span class="text-brand text-xs uppercase tracking-widest font-semibold">Browse</span>
+    <h1 class="font-display text-4xl font-bold mt-3">Shop by category</h1>
+    <p class="text-ink/60 mt-3">Find what you're looking for, faster.</p>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 pb-16">
+    <div *ngIf="loading" class="flex justify-center py-20">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+
+    <div *ngIf="!loading && categories.length === 0" class="text-center py-20">
+      <p class="text-lg text-ink/60">No categories available yet.</p>
+    </div>
+
+    <!-- Mosaic grid (per Figma: mix of wide + tall tiles) -->
+    <div *ngIf="!loading && categories.length > 0" class="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-4">
+      <a
+        *ngFor="let cat of categories; let i = index"
+        routerLink="/search"
+        [queryParams]="{ categoryId: cat.id }"
+        class="group relative rounded-2xl overflow-hidden bg-cover bg-center shadow-card transition-transform duration-300 hover:-translate-y-1"
+        [class.col-span-2]="i % 5 === 0 || i % 5 === 3"
+        [style.background-image]="'url(' + (cat.imageUrl || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=60') + ')'"
+      >
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/20 to-transparent group-hover:from-ink/80 transition-colors duration-300"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-4 md:p-5">
+          <h2 class="text-white font-display font-semibold text-base md:text-lg drop-shadow">{{ cat.name }}</h2>
+          <p class="text-white/70 text-xs md:text-sm mt-0.5 line-clamp-1">{{ cat.description }}</p>
+          <span class="inline-flex items-center gap-1 text-brand-light text-xs font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Shop now
+            <mat-icon style="font-size: 14px; width: 14px; height: 14px;">arrow_forward</mat-icon>
+          </span>
+        </div>
+      </a>
+    </div>
+  </section>
+</div>
