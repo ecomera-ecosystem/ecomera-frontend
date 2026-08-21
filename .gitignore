@@ -32,6 +32,9 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
+# Local design references (wireframes)
+/docs/designs/
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/
