@@ -1,0 +1,117 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">Payment</h1>
+
+  <div *ngIf="loading" class="flex justify-center py-24">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && order" class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+    <!-- Payment form -->
+    <div class="lg:col-span-3">
+      <h2 class="text-lg font-semibold mb-4">Payment method</h2>
+
+      <div class="grid grid-cols-3 gap-3 mb-6">
+        <button
+          *ngFor="let m of methods"
+          type="button"
+          class="flex flex-col items-center gap-2 rounded-xl border-2 p-4 text-sm transition-colors"
+          [class.border-indigo-600]="method === m.value"
+          [class.border-gray-200]="method !== m.value"
+          (click)="selectMethod(m.value)"
+        >
+          <mat-icon class="text-2xl">{{ m.icon }}</mat-icon>
+          <span class="font-medium">{{ m.label }}</span>
+        </button>
+      </div>
+
+      <!-- Credit card form -->
+      <div *ngIf="method === 'CREDIT_CARD'" class="bg-white rounded-xl p-6 shadow-sm space-y-4">
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Card number</label>
+          <input
+            matInput
+            type="text"
+            inputmode="numeric"
+            placeholder="4242 4242 4242 4242"
+            [value]="card.number"
+            (input)="onNumber($event)"
+            class="w-full border rounded-lg px-3 py-2.5 focus:outline-none focus:border-indigo-600"
+          />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Expiry</label>
+            <input
+              type="text"
+              placeholder="MM / YY"
+              [value]="card.expiry"
+              (input)="onExpiry($event)"
+              class="w-full border rounded-lg px-3 py-2.5 focus:outline-none focus:border-indigo-600"
+            />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">CVC</label>
+            <input
+              type="password"
+              placeholder="123"
+              [value]="card.cvc"
+              (input)="onCvc($event)"
+              maxlength="4"
+              class="w-full border rounded-lg px-3 py-2.5 focus:outline-none focus:border-indigo-600"
+            />
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 flex items-center gap-1">
+          <mat-icon style="font-size: 14px; width: 14px; height: 14px;">lock</mat-icon>
+          This is a demo — any card works, nothing is charged.
+        </p>
+      </div>
+
+      <!-- PayPal / bank transfer notice -->
+      <div *ngIf="method !== 'CREDIT_CARD'" class="bg-surface rounded-xl p-8 text-center text-gray-500">
+        <mat-icon class="text-4xl mb-3">{{ method === 'PAYPAL' ? 'account_balance_wallet' : 'account_balance' }}</mat-icon>
+        <p class="text-sm">
+          You'll be redirected to {{ method === 'PAYPAL' ? 'PayPal' : 'your bank' }} to authorize the payment.
+          (Demo — processing completes automatically.)
+        </p>
+      </div>
+
+      <div *ngIf="error" class="mt-4 text-red-600 text-sm bg-red-50 rounded p-3">{{ error }}</div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="mt-6 w-full py-3 text-lg"
+        [disabled]="processing"
+        (click)="pay()"
+      >
+        <mat-icon *ngIf="!processing" class="align-middle mr-1">lock</mat-icon>
+        <mat-progress-spinner *ngIf="processing" diameter="20" mode="indeterminate" class="inline-block align-middle mr-2"></mat-progress-spinner>
+        {{ processing ? 'Processing...' : 'Pay ' + (order.totalPrice | currency:'MAD':'symbol':'1.2-2') }}
+      </button>
+    </div>
+
+    <!-- Order summary -->
+    <div class="lg:col-span-2">
+      <h2 class="text-lg font-semibold mb-4">Order summary</h2>
+      <div class="bg-white rounded-xl p-6 shadow-sm space-y-3">
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-500">Order</span>
+          <span class="font-mono text-xs">#{{ order.id | slice:0:8 }}</span>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="space-y-2">
+          <div *ngFor="let item of order.orderItems" class="flex justify-between text-sm">
+            <span class="truncate mr-3">{{ item.productTitle }} &times; {{ item.quantity }}</span>
+            <span class="font-medium whitespace-nowrap">{{ item.unitPrice * item.quantity | currency:'MAD':'symbol':'1.2-2' }}</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="flex justify-between text-lg font-bold">
+          <span>Total</span>
+          <span class="text-indigo-600">{{ order.totalPrice | currency:'MAD':'symbol':'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

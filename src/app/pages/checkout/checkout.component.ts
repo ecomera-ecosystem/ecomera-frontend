@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartService } from '@app/core/services/cart.service';
 import { OrderService } from '@app/core/services/order.service';
 import { Cart } from '@app/core/models/cart.model';
+import { Order } from '@app/core/models/order.model';
 
 @Component({
   selector: 'app-checkout',
@@ -43,9 +44,9 @@ export class CheckoutComponent implements OnInit {
     this.error = '';
 
     this.orderService.checkout().subscribe({
-      next: () => {
+      next: (order: Order) => {
         this.placing = false;
-        this.router.navigate(['/profile'], { queryParams: { orderPlaced: 'true' } });
+        this.router.navigate(['/payment', order.id]);
       },
       error: (err) => {
         this.placing = false;

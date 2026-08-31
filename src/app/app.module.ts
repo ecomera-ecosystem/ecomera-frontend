@@ -12,6 +12,7 @@ import { HomepageModule } from '@app/pages/homepage/homepage.module';
 import { ProductDetailModule } from '@app/pages/product-detail/product-detail.module';
 import { CartModule } from '@app/pages/cart/cart.module';
 import { CheckoutModule } from '@app/pages/checkout/checkout.module';
+import { PaymentModule } from '@app/pages/payment/payment.module';
 import { SearchModule } from '@app/pages/search/search.module';
 import { ProfileModule } from '@app/pages/profile/profile.module';
 import { NotFoundComponent } from '@app/pages/not-found/not-found.component';
@@ -31,6 +32,7 @@ import { AuthInterceptor } from '@app/core/interceptor/auth.interceptor';
     ProductDetailModule,
     CartModule,
     CheckoutModule,
+    PaymentModule,
     SearchModule,
     ProfileModule,
   ],
