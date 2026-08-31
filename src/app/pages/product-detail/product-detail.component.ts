@@ -4,6 +4,9 @@ import { ProductService } from '@app/core/services/product.service';
 import { CartService } from '@app/core/services/cart.service';
 import { Product } from '@app/core/models/product.model';
 
+import { AuthStateService } from '@app/core/services/auth-state.service';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-product-detail',
   standalone: false,
@@ -17,15 +20,18 @@ export class ProductDetailComponent implements OnInit {
   loading = true;
   addedToCart = false;
   readonly Math = Math;
+  isLoggedIn = false;
 
   constructor(
     private route: ActivatedRoute,
     public router: Router,
     private productService: ProductService,
     private cartService: CartService,
+    private authState: AuthStateService,
   ) {}
 
   ngOnInit() {
+    this.authState.isLoggedIn$.subscribe((v) => (this.isLoggedIn = v));
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) {
       this.router.navigate(['/']);

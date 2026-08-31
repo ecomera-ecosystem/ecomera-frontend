@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Order, CreateOrderRequest } from '@app/core/models/order.model';
+import { Order } from '@app/core/models/order.model';
 import { environment } from '@environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -10,12 +10,20 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  create(order: CreateOrderRequest): Observable<Order> {
-    return this.http.post<Order>(this.apiUrl, order);
+  checkout(): Observable<Order> {
+    return this.http.post<Order>(`${this.apiUrl}/checkout`, {});
   }
 
-  getAll(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.apiUrl);
+  getMyOrders(userId: string, page = 0, size = 10): Observable<{ content: Order[]; totalElements: number }> {
+    return this.http.get<{ content: Order[]; totalElements: number }>(`${this.apiUrl}/user/${userId}`, {
+      params: { page: String(page), size: String(size) },
+    });
+  }
+
+  getAll(page = 0, size = 10): Observable<{ content: Order[]; totalElements: number }> {
+    return this.http.get<{ content: Order[]; totalElements: number }>(this.apiUrl, {
+      params: { page: String(page), size: String(size) },
+    });
   }
 
   getById(id: string): Observable<Order> {

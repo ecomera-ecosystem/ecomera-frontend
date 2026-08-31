@@ -1,30 +1,16 @@
 export interface OrderItem {
+  id: string;
   productId: string;
   productTitle: string;
-  productImage: string;
-  quantity: number;
   unitPrice: number;
-  subtotal: number;
+  quantity: number;
 }
 
 export interface Order {
   id: string;
-  items: OrderItem[];
-  total: number;
+  userId: string;
   status: string;
-  shippingAddress: ShippingAddress;
+  totalPrice: number;
   createdAt: string;
-}
-
-export interface ShippingAddress {
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-}
-
-export interface CreateOrderRequest {
-  items: { productId: string; quantity: number }[];
-  shippingAddress: ShippingAddress;
+  orderItems: OrderItem[];
 }

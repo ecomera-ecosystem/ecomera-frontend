@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '@app/core/services/cart.service';
 import { OrderService } from '@app/core/services/order.service';
 import { Cart } from '@app/core/models/cart.model';
@@ -12,24 +11,15 @@ import { Cart } from '@app/core/models/cart.model';
 })
 export class CheckoutComponent implements OnInit {
   cart: Cart | null = null;
-  checkoutForm: FormGroup;
   loading = true;
   placing = false;
+  error = '';
 
   constructor(
     private cartService: CartService,
     private orderService: OrderService,
-    private fb: FormBuilder,
     private router: Router,
-  ) {
-    this.checkoutForm = this.fb.group({
-      street: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zipCode: ['', Validators.required],
-      country: ['', Validators.required],
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.cartService.getCart().subscribe({
@@ -48,22 +38,18 @@ export class CheckoutComponent implements OnInit {
   }
 
   placeOrder() {
-    if (this.checkoutForm.invalid || !this.cart) return;
+    if (!this.cart || this.placing) return;
     this.placing = true;
+    this.error = '';
 
-    this.orderService.create({
-      items: this.cart.items.map((item) => ({
-        productId: item.productId,
-        quantity: item.quantity,
-      })),
-      shippingAddress: this.checkoutForm.value,
-    }).subscribe({
-      next: (order) => {
+    this.orderService.checkout().subscribe({
+      next: () => {
         this.placing = false;
-        this.router.navigate(['/profile', order.id]);
+        this.router.navigate(['/profile'], { queryParams: { orderPlaced: 'true' } });
       },
-      error: () => {
+      error: (err) => {
         this.placing = false;
+        this.error = err?.error?.message || 'Failed to place order. Please try again.';
       },
     });
   }
