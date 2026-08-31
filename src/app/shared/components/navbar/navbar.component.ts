@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CartService } from '@app/core/services/cart.service';
 import { AuthService } from '@app/core/services/auth.service';
 import { AuthStateService } from '@app/core/services/auth-state.service';
@@ -11,7 +12,7 @@ import { CartItem } from '@app/core/models/cart.model';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent implements OnInit, OnChanges {
+export class NavbarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isLoggedIn: boolean = false;
 
   userName = '';
@@ -19,6 +20,7 @@ export class NavbarComponent implements OnInit, OnChanges {
   cartTotal = 0;
   mobileMenuOpen = false;
   mobileSearchOpen = false;
+  private cartSub?: Subscription;
 
   constructor(
     private router: Router,
@@ -27,13 +29,22 @@ export class NavbarComponent implements OnInit, OnChanges {
     private authState: AuthStateService,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.cartSub = this.cartService.cart$.subscribe((cart) => {
+      this.cartItems = cart?.items || [];
+      this.cartTotal = cart?.totalPrice || 0;
+    });
+  }
+
+  ngOnDestroy() {
+    this.cartSub?.unsubscribe();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['isLoggedIn']) {
       if (this.isLoggedIn) {
         this.getMe();
-        this.loadCart();
+        this.cartService.refreshCart();
       } else {
         this.userName = '';
         this.cartItems = [];
@@ -58,15 +69,6 @@ export class NavbarComponent implements OnInit, OnChanges {
         } catch {
           this.userName = '';
         }
-      },
-    });
-  }
-
-  loadCart() {
-    this.cartService.getCart().subscribe({
-      next: (cart) => {
-        this.cartItems = cart.items || [];
-        this.cartTotal = cart.total || 0;
       },
     });
   }

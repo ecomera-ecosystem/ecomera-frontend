@@ -5,6 +5,7 @@ export interface CartItem {
   productImage: string;
   unitPrice: number;
   quantity: number;
+  availableStock: number;
   subtotal: number;
 }
 
@@ -12,7 +13,8 @@ export interface Cart {
   id: string;
   userId: string;
   items: CartItem[];
-  total: number;
+  totalPrice: number;
+  totalItems: number;
 }
 
 export interface AddToCartRequest {

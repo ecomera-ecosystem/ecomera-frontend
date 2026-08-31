@@ -12,7 +12,6 @@
   </div>
 
   <div *ngIf="!loading && cart && cart.items.length > 0">
-    <!-- Items -->
     <div class="space-y-4 mb-8">
       <div *ngFor="let item of cart.items" class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
         <img
@@ -38,11 +37,10 @@
       </div>
     </div>
 
-    <!-- Summary -->
     <div class="bg-white p-6 rounded-lg shadow-sm">
       <div class="flex justify-between text-lg font-bold mb-4">
-        <span>Total</span>
-        <span class="text-indigo-600">{{ cart.total | currency:'MAD':'symbol':'1.2-2' }}</span>
+        <span>Total ({{ cart.totalItems }} items)</span>
+        <span class="text-indigo-600">{{ cart.totalPrice | currency:'MAD':'symbol':'1.2-2' }}</span>
       </div>
       <div class="flex gap-4">
         <button mat-stroked-button (click)="clearCart()" class="flex-1">Clear Cart</button>

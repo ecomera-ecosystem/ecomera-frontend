@@ -27,16 +27,19 @@ export class ProfileComponent implements OnInit {
     this.authService.getMe().subscribe({
       next: (user) => {
         this.user = user;
+        this.loadOrders(user.id);
       },
       error: () => {
         this.authState.logout();
         this.router.navigate(['/login']);
       },
     });
+  }
 
-    this.orderService.getAll().subscribe({
-      next: (orders) => {
-        this.orders = orders;
+  private loadOrders(userId: string) {
+    this.orderService.getMyOrders(userId).subscribe({
+      next: (res) => {
+        this.orders = res.content || [];
         this.loading = false;
       },
       error: () => (this.loading = false),

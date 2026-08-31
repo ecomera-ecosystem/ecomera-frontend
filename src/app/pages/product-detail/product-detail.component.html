@@ -56,21 +56,30 @@
       <mat-divider></mat-divider>
 
       <div class="flex items-center gap-3 mt-2">
-        <mat-form-field appearance="outline" class="w-24" hideRequiredMarker>
-          <mat-label>Qty</mat-label>
-          <input matInput type="number" min="1" max="{{ product.stock }}" [(ngModel)]="quantity" />
-        </mat-form-field>
+        <ng-container *ngIf="isLoggedIn; else loginPrompt">
+          <mat-form-field appearance="outline" class="w-24" hideRequiredMarker>
+            <mat-label>Qty</mat-label>
+            <input matInput type="number" min="1" max="{{ product.stock }}" [(ngModel)]="quantity" />
+          </mat-form-field>
 
-        <button
-          mat-raised-button
-          color="primary"
-          class="!py-2 !px-8 !text-base flex-1 rounded-full"
-          (click)="addToCart()"
-          [disabled]="addedToCart"
-        >
-          <mat-icon>shopping_cart</mat-icon>
-          {{ addedToCart ? 'Added!' : 'Add to Cart' }}
-        </button>
+          <button
+            mat-raised-button
+            color="primary"
+            class="!py-2 !px-8 !text-base flex-1 rounded-full"
+            (click)="addToCart()"
+            [disabled]="addedToCart"
+          >
+            <mat-icon>shopping_cart</mat-icon>
+            {{ addedToCart ? 'Added!' : 'Add to Cart' }}
+          </button>
+        </ng-container>
+
+        <ng-template #loginPrompt>
+          <a mat-raised-button color="primary" routerLink="/login" class="!py-2 !px-8 !text-base flex-1 rounded-full no-underline">
+            <mat-icon>login</mat-icon>
+            Log in to buy
+          </a>
+        </ng-template>
       </div>
 
       <!-- Trust badges -->

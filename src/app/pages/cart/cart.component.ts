@@ -52,7 +52,7 @@ export class CartComponent implements OnInit {
   clearCart() {
     this.cartService.clearCart().subscribe({
       next: () => {
-        this.cart = { id: '', userId: '', items: [], total: 0 };
+        this.cart = { id: '', userId: '', items: [], totalPrice: 0, totalItems: 0 };
       },
     });
   }
