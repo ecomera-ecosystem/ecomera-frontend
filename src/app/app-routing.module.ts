@@ -7,6 +7,7 @@ import { NotFoundComponent } from '@app/pages/not-found/not-found.component';
 import { ProductDetailComponent } from '@app/pages/product-detail/product-detail.component';
 import { CartComponent } from '@app/pages/cart/cart.component';
 import { CheckoutComponent } from '@app/pages/checkout/checkout.component';
+import { PaymentComponent } from '@app/pages/payment/payment.component';
 import { SearchComponent } from '@app/pages/search/search.component';
 import { ProfileComponent } from '@app/pages/profile/profile.component';
 import { AuthGuard } from '@app/core/guards/auth.guard';
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'products/:id', component: ProductDetailComponent, title: 'Product Details' },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard], title: 'Shopping Cart' },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard], title: 'Checkout' },
+  { path: 'payment/:orderId', component: PaymentComponent, canActivate: [AuthGuard], title: 'Payment' },
   { path: 'search', component: SearchComponent, title: 'Search Products' },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], title: 'My Account' },
   { path: 'login', component: LoginComponent, title: 'Log in' },
