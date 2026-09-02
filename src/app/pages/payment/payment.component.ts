@@ -43,12 +43,26 @@ export class PaymentComponent implements OnInit {
     this.orderService.getById(this.orderId).subscribe({
       next: (order) => {
         this.order = order;
+        this.checkExistingPayment();
         this.loading = false;
       },
       error: () => {
         this.loading = false;
         this.router.navigate(['/profile']);
       },
+    });
+  }
+
+  private checkExistingPayment() {
+    this.paymentService.getByOrder(this.orderId).subscribe({
+      next: (payment) => {
+        if (payment.status === 'SUCCEEDED') {
+          this.finish();
+        } else if (payment.status === 'FAILED') {
+          this.error = 'Your previous payment attempt failed. Please try again.';
+        }
+      },
+      error: () => {},
     });
   }
 
@@ -98,11 +112,16 @@ export class PaymentComponent implements OnInit {
     this.processing = true;
     this.error = '';
 
-    this.paymentService.create({ orderId: this.order.id, paymentMethod: this.method }).subscribe({
-      next: (payment) => this.simulatePayment(payment),
-      error: (err) => {
-        this.processing = false;
-        this.error = err?.error?.message || 'Unable to initiate payment. Please try again.';
+    this.paymentService.getByOrder(this.order.id).subscribe({
+      next: (existing) => this.simulatePayment(existing),
+      error: () => {
+        this.paymentService.create({ orderId: this.order!.id, paymentMethod: this.method }).subscribe({
+          next: (payment) => this.simulatePayment(payment),
+          error: (err) => {
+            this.processing = false;
+            this.error = err?.error?.message || 'Unable to initiate payment. Please try again.';
+          },
+        });
       },
     });
   }
